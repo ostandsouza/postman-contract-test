@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "54524d9a-9879-41f1-942b-841287cb9e40",
+		"name": "[Contract test] Customers Service by Billing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get Customer By Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7d31c07-a718-44a7-9d87-c2c172e18a09",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Content-Type is JSON\", () => {",
+							"    pm.expect(pm.response.headers.get('Content-Type')).to.eql('application/json');",
+							"});",
+							"",
+							"const schema = {",
+							"    \"type\": \"array\",",
+							"    \"items\": { \"$ref\": \"#/definitions/customer\" },",
+							"    \"definitions\": {",
+							"        \"customer\": {",
+							"            \"type\": \"object\",",
+							"            \"required\": [ \"fistName\", \"lastName\", \"title\"],",
+							"            \"properties\": {",
+							"                \"fistName\": {",
+							"                    \"type\": \"string\",",
+							"                    \"description\": \"First name\"",
+							"                },",
+							"                \"lastName\": {",
+							"                    \"type\": \"string\",",
+							"                    \"description\": \"Last name\"",
+							"                },",
+							"                \"title\": {",
+							"                    \"type\": \"string\",",
+							"                    \"description\": \"Title\"",
+							"                }",
+							"            }",
+							"        }",
+							"    }  ",
+							"};",
+							"",
+							"pm.test(\"Validate schema\", () => {",
+							"    pm.response.to.have.jsonSchema(schema);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/customers/",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"customers",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
